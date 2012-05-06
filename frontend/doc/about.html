@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Timeline for Joomla (about)</TITLE>
+<style type="text/css" media="screen">@import "../components/com_timeline/css/timeline.css";</style>
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" DIR="LTR">
+
+<div id="menu1" class="menu1">
+  <a class="menu2" href="index.php?option=com_timeline&task=set" class="button">Manage Events</a>
+  <a class="menu2" href="index.php?option=com_timeline&task=faq" class="button">FAQ</a>
+  <a class="menu2" href="index.php?option=com_timeline&task=about" class="button">About</a>
+</div>
+
+<H1><U>About Timeline</U></H1>
+<P STYLE="margin-bottom: 0cm">Link: <A HREF="http://simile.mit.edu/timeline/docs/" TARGET="_blank">Timeline
+Documentation</A></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="../components/com_timeline/images/timeline.png" NAME="Grafik2" ALIGN=CENTER BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<div style="text-align:left">
+<H1>Timeline Basics</H1>
+<P>A timeline contains one or more <EM><A HREF="http://simile.mit.edu/timeline/docs/bands.html">bands</A></EM>,
+which can be panned infinitely by dragging with the mouse pointer. A
+band can be configured to synchronize with another band such that
+panning one band also scrolls the other. 
+</P>
+<P><IMG SRC="../components/com_timeline/images/band.jpg" NAME="Grafik1" ALIGN=RIGHT WIDTH=304 HEIGHT=72 BORDER=0>A
+timeline is implemented as a div element that contains inner div
+elements as its bands (right). The band divs are cropped and
+positioned relative to the timeline div. 
+</P>
+<P>A band div itself contains several inner elements that implements
+various parts of the band. For example, the two timelines above show
+labels for days, weeks, months, and years. The bands also have
+different background colors, and the weekly band of the second
+timeline has weekend markings. All of these visual elements are
+&quot;painted&quot; by adding HTML elements to the band divs at the
+appropriate positions. 
+</P>
+<P>As a band is panned, its div is shifted horizontally or
+vertically, carrying all of its visual elements along. When either
+end of the band div approaches the visible (non-cropped) area, the
+band div is re-centered, its coordinate origin is changed, and then
+its various visual elements are re-&quot;painted&quot; relative to
+the new coordinate origin. All of this &quot;paging&quot; is done as
+seamlessly as possible so that the user experiences smooth, <EM>infinite</EM>
+panning. 
+</P>
+<P>A band is responsible for supporting panning as well as
+coordinating its various sub-components: 
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm">an <EM><A HREF="http://simile.mit.edu/timeline/docs/ethers.html">ether</A></EM>,
+	whose sole responsibility is mapping between pixel coordinates and
+	dates/times; 
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">an <EM><A HREF="http://simile.mit.edu/timeline/docs/ether-painters.html">ether
+	painter</A></EM>, which paints date/time labels and the background
+	of the band as well as the highlight (the lighter part of the lower
+	band in the first timeline above); 
+	</P>
+	<LI><P STYLE="margin-bottom: 0cm">zero or more <EM><A HREF="http://simile.mit.edu/timeline/docs/decorators.html">decorators</A></EM>,
+	which further decorate the background of the band; and 
+	</P>
+	<LI><P>an <EM><A HREF="http://simile.mit.edu/timeline/docs/event-painters.html">event
+	painter</A></EM>, which paints the events. 
+	</P>
+</UL>
+<P>The band also takes an <EM><A HREF="http://simile.mit.edu/timeline/docs/event-sources.html">event
+source</A></EM> which provides events to be displayed in that band.
+Different bands can have different event sources. This flexibility
+allows for <EM>timeline mashups</EM>, as exemplified <A HREF="http://simile.mit.edu/timeline/examples/religions/religions.html">here</A>.
+Various sub-components that do painting take a <EM><A HREF="http://simile.mit.edu/timeline/docs/themes.html">theme</A></EM>,
+which stores default visual and behavioral settings. 
+</P>
+</div>
+</BODY>
+</HTML>

@@ -1,0 +1,133 @@
+DROP TABLE IF EXISTS `#__timeline`;
+
+CREATE TABLE IF NOT EXISTS `#__timeline` (
+`id` int(11) NOT NULL auto_increment,
+`StartDay` VARCHAR(3) NOT NULL DEFAULT 'Mon',
+`StartMonth` VARCHAR(3) NOT NULL DEFAULT 'Jan',
+`StartDateDay` int(2) NOT NULL DEFAULT '01',
+`StartDateYear` int(4) NOT NULL DEFAULT '2007',
+`StartDateTime` VARCHAR(8) NOT NULL DEFAULT '09:00:00',
+`StartDateGMT` VARCHAR(40) NOT NULL DEFAULT 'GMT',
+`EndDay` VARCHAR(3) NOT NULL DEFAULT 'Sun',
+`EndMonth` VARCHAR(3) NOT NULL DEFAULT 'Dec',
+`EndDateDay` int(2) DEFAULT '31',
+`EndDateYear` int(4) NOT NULL DEFAULT '2007',
+`EndDateTime` VARCHAR(8) NOT NULL DEFAULT '10:00:00',
+`EndDateGMT` VARCHAR(40) NOT NULL DEFAULT 'GMT',
+`isDuration` VARCHAR(40) NOT NULL,
+`title` VARCHAR(40) NOT NULL DEFAULT 'EVENT',
+`image` text NOT NULL,
+`description` text NOT NULL,
+`link` text NOT NULL,
+PRIMARY KEY (id)
+);
+
+INSERT INTO `#__timeline`
+(
+`id`,
+`StartDay`,
+`StartMonth`, 
+`StartDateDay`,
+`StartDateYear`,
+`StartDateTime`,
+`StartDateGMT`,
+`EndDay`,
+`EndMonth`, 
+`EndDateDay`,
+`EndDateYear`,
+`EndDateTime`,
+`EndDateGMT`,
+`isDuration`,
+`title`,
+`image`,
+`description`,
+`link`
+) VALUES (
+1,
+'Mon',
+'May',
+'28',
+'2006',
+'09:00:00',
+'GMT',
+'Fri',
+'Jun',
+'15',
+'2006',
+'09:00:00',
+'GMT',
+'true',
+'Writing Timeline documentation',
+'http://simile.mit.edu/images/csail-logo.gif',
+'A few days to write some documentation for something.',
+'http://travel.yahoo.com/'
+);
+
+DROP TABLE IF EXISTS `#__timeline_conf`;
+
+CREATE TABLE `#__timeline_conf` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`TL_VERSION` VARCHAR( 10 ) NOT NULL default '1.0.6',
+`TL_AJAX` TINYINT( 1 ) NOT NULL default '0',
+`TL_ROWS` TINYINT( 2 ) NOT NULL default '10',
+`TL_PAGES` TINYINT( 2 ) NOT NULL default '5',
+`TL_ORDER_BY` VARCHAR( 20 ) NOT NULL default 'id',
+`TL_ORDER_TYPE` VARCHAR( 4 ) NOT NULL default 'desc',
+`TL_AUTOCLOSE_TIMER` INT( 6 ) NOT NULL default '1000',
+`TL_SHOW_FROMID` TINYINT( 1 ) NOT NULL default '0',
+`TL_SHOW_AVATAR` TINYINT( 1 ) NOT NULL default '1',
+`TL_APPEND_OLDMSG` TINYINT( 1 ) NOT NULL default '1',
+`TL_BUDDYLIST` TINYINT( 1 ) NOT NULL default '0',
+`TL_SHOW_OFFLINE_BUDDYS` TINYINT( 1 ) NOT NULL default '0',
+`TL_SHOW_BUDDYREQUESTS` TINYINT( 1 ) NOT NULL default '0',
+`TL_BUDDYLIST_BUTTONS` TINYINT( 1 ) NOT NULL default '0',
+`TL_SHOW_SELF` TINYINT( 1 ) NOT NULL default '0',
+`TL_CSS` TINYINT( 1 ) NOT NULL default '0',
+`TL_MSGHEADER` TINYINT( 1 ) NOT NULL default '1',
+`TL_REFRESHTIME` INT( 6 ) NOT NULL default '15',
+`TL_SMILEY` TINYINT( 1 ) NOT NULL default '1',
+`TL_BBCODE_IMAGECOUNT` INT( 6 ) NOT NULL default '10',
+`TL_SHOW_ALLUSERS` TINYINT( 1 ) NOT NULL default '1',
+`TL_WORDWRAP` TINYINT( 1 ) NOT NULL default '1',
+`TL_BLOWFISH_ENCRYPTION` TINYINT( 1 ) NOT NULL default '1',
+`TL_POPUPSOUND` TINYINT( 1 ) NOT NULL default '0',
+`TL_GZIP_COMPRESSION` TINYINT( 1 ) NOT NULL default '0',
+`TL_AUTOMARKASREAD` TINYINT( 1 ) NOT NULL default '1',
+`TL_USERCONF` TINYINT( 1 ) NOT NULL default '0',
+`TL_URL2LINK` TINYINT( 1 ) NOT NULL default '1'
+);
+
+INSERT INTO `#__timeline_conf` (
+`id` ,
+`TL_VERSION` ,
+`TL_AJAX` ,
+`TL_ROWS` ,
+`TL_PAGES` ,
+`TL_ORDER_BY` ,
+`TL_ORDER_TYPE` ,
+`TL_AUTOCLOSE_TIMER` ,
+`TL_SHOW_FROMID` ,
+`TL_SHOW_AVATAR` ,
+`TL_APPEND_OLDMSG` ,
+`TL_BUDDYLIST` ,
+`TL_SHOW_OFFLINE_BUDDYS` ,
+`TL_SHOW_BUDDYREQUESTS` ,
+`TL_BUDDYLIST_BUTTONS` ,
+`TL_SHOW_SELF` ,
+`TL_CSS` ,
+`TL_MSGHEADER`,
+`TL_REFRESHTIME`,
+`TL_SMILEY`,
+`TL_BBCODE_IMAGECOUNT`,
+`TL_SHOW_ALLUSERS`,
+`TL_WORDWRAP`,
+`TL_BLOWFISH_ENCRYPTION`,
+`TL_POPUPSOUND`,
+`TL_GZIP_COMPRESSION`,
+`TL_AUTOMARKASREAD`,
+`TL_USERCONF`,
+`TL_URL2LINK`
+)
+VALUES (
+'1', '1.0.6', '0', '10', '5', 'id', 'desc', '1000', '0', '1', '1', '0', '0', '1', '1', '1', '0', '0', '15', '1', '10', '1', '1', '1', '0', '0', '1', '0', '1'
+);

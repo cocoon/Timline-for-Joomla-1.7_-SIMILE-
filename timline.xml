@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" method="upgrade">
+   <name>timeline</name>
+   <creationDate>02.10.2011</creationDate>
+   <author>Patrick Schlicher</author>
+   <copyright>This component is released under the GNU/GPL License</copyright>
+   <authorEmail>neo_kortex@gmx.net</authorEmail>
+   <authorUrl>http://www.joomla.org</authorUrl>
+   <version>1.0.6</version>
+   <description>Timeline is a DHTML-based AJAXy widget for visualizing time-based events. This uses timeline-api from http://simile.mit.edu</description>
+
+	<install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall> <!-- Runs on uninstall -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update> <!-- Runs on update; New in 1.6 -->
+		<schemas>
+			<!-- <schemapath type="mysql">sql/updates/mysql</schemapath> -->
+		</schemas>
+	</update>
+
+
+<files folder="frontend">
+  <folder>css</folder>
+  <folder>doc</folder>
+  <folder>images</folder>
+  <folder>js</folder>
+  <folder>models</folder>
+  <folder>views</folder>
+
+  <filename>content.html.php</filename>
+  <filename>content.zoom.html.php</filename>
+  <filename>enddate.inc.php</filename>
+  <filename>index.html</filename>
+  <filename>startdate.inc.php</filename>
+  <filename>timeline.html.php</filename>
+  <filename>timeline.navigation.php</filename>
+  <filename>timeline.php</filename>
+</files>
+
+<installfile>install.timeline.php</installfile>
+<uninstallfile>uninstall.timeline.php</uninstallfile>
+
+<administration>
+  <menu link="option=com_timeline" img="components/com_timeline/assets/img/timeline_menu_icon.png">Timeline</menu>
+  <submenu>
+    <menu task="set">Events</menu>
+    <menu task="faq">FAQ</menu>
+    <menu task="about">About</menu>
+  </submenu>
+
+  <files folder="admin">
+    <folder>assets</folder>
+    <folder>models</folder>
+    <folder>views</folder>
+    <folder>sql</folder>
+
+    <filename>sql/install.mysql.utf8.sql</filename>
+    <filename>sql/uninstall.mysql.utf8.sql</filename>
+    <filename>admin.timeline.html.php</filename>
+    <filename>admin.timeline.navigation.php</filename>
+    <filename>admin.timeline.php</filename>
+    <filename>index.html</filename>
+    <filename>timeline.class.php</filename>
+    <filename>timeline.conf.php</filename>
+    <filename>toolbar.timeline.html.php</filename>
+    <filename>toolbar.timeline.php</filename>
+  </files>
+
+  <files>
+      <filename>install.timeline.php</filename>
+      <filename>uninstall.timeline.php</filename>
+      <filename>index.html</filename>
+  </files>
+
+  <languages folder="admin">
+  		<language tag="de-DE">language/de-DE/de-DE.com_timeline.ini</language>
+  		<language tag="de-DE">language/de-DE/de-DE.com_timeline.sys.ini</language>
+  		<language tag="en-GB">language/en-GB/en-GB.com_timeline.ini</language>
+  		<language tag="en-GB">language/en-GB/en-GB.com_timeline.sys.ini</language>
+  </languages>
+</administration>
+</extension>
+

@@ -1,0 +1,20 @@
+02.10.2011
+
+-Rewrite for Joomla 1.7
+
+17.05.2010
+
+-make Joomla 1.5 native ready
+
+
+
+05.06.2009 v1.0.2
+
+-make Joomla 1.5 legacy ready
+-Joomla 1.5 install xml & install.mysql.sql & uninstall.mysql.sql
+-fixed: xml-output
+-fixed: Admin-backend
+-added: globals at top of timeline.php & admin.timeline.php
+-fixed install.timeline.php & uninstall.timeline.php
+-fixed: remove sef.php from admin.timeline.html.php
+-fixed: content.zoom.html.php & content.html.php

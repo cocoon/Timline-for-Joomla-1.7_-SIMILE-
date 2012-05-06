@@ -1,0 +1,16 @@
+.timeline {padding:0 0 0 32px; margin:5;}
+
+.iframe1 {border:1px solid green;}
+.iframe2 {border:1px solid red;}
+
+.menu1 {height: 25px; color:#333; background-color:lightgrey; border:1px solid black; padding: 2px}
+.menu1 a {color:#333; margin-left:5px;  background-color:lightgrey; border:1px solid green;}
+.menu1 a:hover {color:#444; border:1px solid black; cursor:hand;}
+
+.menu2 {height: 25px; color:#333; background-color:lightgrey; border:1px solid black; padding: 2px}
+.menu2 a {color:#333; margin-left:5px;  border:1px solid blue;}
+.menu2 a:hover {color:#444;  border:1px solid black; cursor:hand;}
+
+.menu3 {height: 25px; color:#333; background-color:lightgrey; border:1px solid black; padding: 2px}
+.menu3 a {color:#333;margin-left:5px;  border:1px solid red;}
+.menu3 a:hover {color:#444;  border:1px solid black; cursor:hand;}
