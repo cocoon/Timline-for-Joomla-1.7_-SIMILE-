@@ -1,5 +1,5 @@
 /*==================================================
- *  Original Event Painter
+ *  Compact Event Painter
  *==================================================
  */
 
@@ -14,6 +14,10 @@ Timeline.CompactEventPainter = function(params) {
     this._eventIdToElmt = {};
 };
 
+Timeline.CompactEventPainter.prototype.getType = function() {
+    return 'compact';
+};
+
 Timeline.CompactEventPainter.prototype.initialize = function(band, timeline) {
     this._band = band;
     this._timeline = timeline;
@@ -24,6 +28,10 @@ Timeline.CompactEventPainter.prototype.initialize = function(band, timeline) {
     this._highlightLayer = null;
     
     this._eventIdToElmt = null;
+};
+
+Timeline.CompactEventPainter.prototype.supportsOrthogonalScrolling = function() {
+    return true;
 };
 
 Timeline.CompactEventPainter.prototype.addOnSelectListener = function(listener) {
@@ -64,45 +72,7 @@ Timeline.CompactEventPainter.prototype.paint = function() {
     this._eventIdToElmt = {};
     this._prepareForPainting();
     
-    var theme = this._params.theme;
-    var eventTheme = theme.event;
-    
-    var metrics = {
-        trackOffset:            "trackOffset" in this._params ? this._params.trackOffset : 10,
-        trackHeight:            "trackHeight" in this._params ? this._params.trackHeight : 10,
-        
-        tapeHeight:             theme.event.tape.height,
-        tapeBottomMargin:       "tapeBottomMargin" in this._params ? this._params.tapeBottomMargin : 2,
-        
-        labelBottomMargin:      "labelBottomMargin" in this._params ? this._params.labelBottomMargin : 5,
-        labelRightMargin:       "labelRightMargin" in this._params ? this._params.labelRightMargin : 5,
-        
-        defaultIcon:            eventTheme.instant.icon,
-        defaultIconWidth:       eventTheme.instant.iconWidth,
-        defaultIconHeight:      eventTheme.instant.iconHeight,
-        
-        customIconWidth:        "iconWidth" in this._params ? this._params.iconWidth : eventTheme.instant.iconWidth,
-        customIconHeight:       "iconHeight" in this._params ? this._params.iconHeight : eventTheme.instant.iconHeight,
-        
-        iconLabelGap:           "iconLabelGap" in this._params ? this._params.iconLabelGap : 2,
-        iconBottomMargin:       "iconBottomMargin" in this._params ? this._params.iconBottomMargin : 2
-    };
-    if ("compositeIcon" in this._params) {
-        metrics.compositeIcon = this._params.compositeIcon;
-        metrics.compositeIconWidth = this._params.compositeIconWidth || metrics.customIconWidth;
-        metrics.compositeIconHeight = this._params.compositeIconHeight || metrics.customIconHeight;
-    } else {
-        metrics.compositeIcon = metrics.defaultIcon;
-        metrics.compositeIconWidth = metrics.defaultIconWidth;
-        metrics.compositeIconHeight = metrics.defaultIconHeight;
-    }
-    metrics.defaultStackIcon = "icon" in this._params.stackConcurrentPreciseInstantEvents ?
-        this._params.stackConcurrentPreciseInstantEvents.icon : metrics.defaultIcon;
-    metrics.defaultStackIconWidth = "iconWidth" in this._params.stackConcurrentPreciseInstantEvents ?
-        this._params.stackConcurrentPreciseInstantEvents.iconWidth : metrics.defaultIconWidth;
-    metrics.defaultStackIconHeight = "iconHeight" in this._params.stackConcurrentPreciseInstantEvents ?
-        this._params.stackConcurrentPreciseInstantEvents.iconHeight : metrics.defaultIconHeight;
-    
+    var metrics = this._computeMetrics();
     var minDate = this._band.getMinDate();
     var maxDate = this._band.getMaxDate();
     
@@ -166,9 +136,69 @@ Timeline.CompactEventPainter.prototype.paint = function() {
     this._highlightLayer.style.display = "block";
     this._lineLayer.style.display = "block";
     this._eventLayer.style.display = "block";
+    
+    this._setOrthogonalOffset(metrics);
 };
 
 Timeline.CompactEventPainter.prototype.softPaint = function() {
+    this._setOrthogonalOffset(this._computeMetrics());
+};
+
+Timeline.CompactEventPainter.prototype.getOrthogonalExtent = function() {
+    var metrics = this._computeMetrics();
+    return 2 * metrics.trackOffset + this._tracks.length * metrics.trackHeight;
+};
+
+Timeline.CompactEventPainter.prototype._setOrthogonalOffset = function(metrics) {
+    var orthogonalOffset = this._band.getViewOrthogonalOffset();
+    
+    this._highlightLayer.style.top = 
+        this._lineLayer.style.top = 
+            this._eventLayer.style.top = 
+                orthogonalOffset + "px";
+};
+
+Timeline.CompactEventPainter.prototype._computeMetrics = function() {
+    var theme = this._params.theme;
+    var eventTheme = theme.event;
+    
+    var metrics = {
+        trackOffset:            "trackOffset" in this._params ? this._params.trackOffset : 10,
+        trackHeight:            "trackHeight" in this._params ? this._params.trackHeight : 10,
+        
+        tapeHeight:             theme.event.tape.height,
+        tapeBottomMargin:       "tapeBottomMargin" in this._params ? this._params.tapeBottomMargin : 2,
+        
+        labelBottomMargin:      "labelBottomMargin" in this._params ? this._params.labelBottomMargin : 5,
+        labelRightMargin:       "labelRightMargin" in this._params ? this._params.labelRightMargin : 5,
+        
+        defaultIcon:            eventTheme.instant.icon,
+        defaultIconWidth:       eventTheme.instant.iconWidth,
+        defaultIconHeight:      eventTheme.instant.iconHeight,
+        
+        customIconWidth:        "iconWidth" in this._params ? this._params.iconWidth : eventTheme.instant.iconWidth,
+        customIconHeight:       "iconHeight" in this._params ? this._params.iconHeight : eventTheme.instant.iconHeight,
+        
+        iconLabelGap:           "iconLabelGap" in this._params ? this._params.iconLabelGap : 2,
+        iconBottomMargin:       "iconBottomMargin" in this._params ? this._params.iconBottomMargin : 2
+    };
+    if ("compositeIcon" in this._params) {
+        metrics.compositeIcon = this._params.compositeIcon;
+        metrics.compositeIconWidth = this._params.compositeIconWidth || metrics.customIconWidth;
+        metrics.compositeIconHeight = this._params.compositeIconHeight || metrics.customIconHeight;
+    } else {
+        metrics.compositeIcon = metrics.defaultIcon;
+        metrics.compositeIconWidth = metrics.defaultIconWidth;
+        metrics.compositeIconHeight = metrics.defaultIconHeight;
+    }
+    metrics.defaultStackIcon = ("stackConcurrentPreciseInstantEvents" in this._params && "icon" in this._params.stackConcurrentPreciseInstantEvents) ?
+        this._params.stackConcurrentPreciseInstantEvents.icon : metrics.defaultIcon;
+    metrics.defaultStackIconWidth = ("stackConcurrentPreciseInstantEvents" in this._params && "iconWidth" in this._params.stackConcurrentPreciseInstantEvents) ?
+        this._params.stackConcurrentPreciseInstantEvents.iconWidth : metrics.defaultIconWidth;
+    metrics.defaultStackIconHeight = ("stackConcurrentPreciseInstantEvents" in this._params && "iconHeight" in this._params.stackConcurrentPreciseInstantEvents) ?
+        this._params.stackConcurrentPreciseInstantEvents.iconHeight : metrics.defaultIconHeight;
+    
+    return metrics;
 };
 
 Timeline.CompactEventPainter.prototype._prepareForPainting = function() {
@@ -511,6 +541,7 @@ Timeline.CompactEventPainter.prototype.paintImpreciseInstantEvent = function(evt
         end:            evt.getEnd(),
         latestStart:    evt.getLatestStart(),
         earliestEnd:    evt.getEarliestEnd(),
+        color:          evt.getColor() || evt.getTextColor(),
         isInstant:      true
     };
     
@@ -533,7 +564,7 @@ Timeline.CompactEventPainter.prototype.paintImpreciseInstantEvent = function(evt
     var result = this.paintTapeIconLabel(
         evt.getStart(),
         commonData,
-        tapeData, // no tape data
+        tapeData,
         iconData,
         labelData,
         metrics,
@@ -569,6 +600,7 @@ Timeline.CompactEventPainter.prototype.paintPreciseDurationEvent = function(evt,
     var tapeData = {
         start:          evt.getStart(),
         end:            evt.getEnd(),
+        color:          evt.getColor() || evt.getTextColor(),
         isInstant:      false
     };
     
@@ -591,7 +623,7 @@ Timeline.CompactEventPainter.prototype.paintPreciseDurationEvent = function(evt,
     var result = this.paintTapeIconLabel(
         evt.getLatestStart(),
         commonData,
-        tapeData, // no tape data
+        tapeData,
         iconData,
         labelData,
         metrics,
@@ -629,6 +661,7 @@ Timeline.CompactEventPainter.prototype.paintImpreciseDurationEvent = function(ev
         end:            evt.getEnd(),
         latestStart:    evt.getLatestStart(),
         earliestEnd:    evt.getEarliestEnd(),
+        color:          evt.getColor() || evt.getTextColor(),
         isInstant:      false
     };
     
@@ -651,7 +684,7 @@ Timeline.CompactEventPainter.prototype.paintImpreciseDurationEvent = function(ev
     var result = this.paintTapeIconLabel(
         evt.getLatestStart(),
         commonData,
-        tapeData, // no tape data
+        tapeData,
         iconData,
         labelData,
         metrics,
