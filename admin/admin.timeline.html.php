@@ -121,6 +121,15 @@ class timeline
 $k = 0;
 for($i=0; $i < count( $rows ); $i++) {
 $row = $rows[$i];
+
+  $imageurl = "";
+  $imageurl = $imageurl.$row->image;
+  
+  if (!strncmp($imageurl, "images/", strlen("images/")))
+  {
+    $imageurl = "../".$imageurl;
+  }
+
 	if ($row->isDuration == 'true') {
 		$resim 		= JURI::root()."/components/com_timeline/images/1.png";
 		$resimalt 	= _TL_isDuration;
@@ -164,7 +173,7 @@ $enddate = $endday." ".$endmonth." ".$enddateday." ".$enddateyear." ".$enddateti
   
     <td><img src="<?php echo $resim;?>" alt="<?php echo $resimalt;?>" /></td>
     <td><?php echo $row->title;?></td>
-    <td><img src="<?php echo $row->image;?>" width="50" height="50" alt="::"></td>
+    <td><img src="<?php echo $imageurl;?>" width="50" height="50" alt="::"></td>
     <td><div style="width:280px; height:70px; border:1px solid #840;overflow:auto;" id="description<?php echo $row->id; ?>" name="description<?php echo $row->id; ?>" rows=3 cols=35 ><?php echo $row->description;?></div></td>
     <td><a href="<?php echo $row->link;?>">Link</a></td>
   </tr>
